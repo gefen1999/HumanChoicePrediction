@@ -7,6 +7,8 @@ from utils import personas
 import argparse
 
 parser = argparse.ArgumentParser(description='Hyperparameter tuning with wandb.')
+
+
 def str2bool(v):
     if isinstance(v, bool):
         return v
@@ -16,6 +18,15 @@ def str2bool(v):
         return False
     else:
         raise argparse.ArgumentTypeError('Boolean value expected.')
+
+
+# Strategies Hyperparameters
+parser.add_argument('--aggressive_pursuit_fixed_interval', type=int, default=1, help='Aggressive pursuit fixed interval')
+parser.add_argument('--aggressive_pursuit_divisor', type=int, default=2, help='Aggressive pursuit divisor')
+parser.add_argument('--adaptive_learning_disappointment_threshold', type=float, default=0.3, help='Adaptive learning disappointment threshold')
+parser.add_argument('--conservative_strategy_initial_threshold', type=float, default=0.5, help='Conservative strategy initial threshold')
+parser.add_argument('--conservative_strategy_alpha', type=float, default=0.4, help='Conservative strategy alpha')
+parser.add_argument('--conservative_strategy_min_threshold', type=float, default=0.2, help='Conservative strategy min threshold')
 
 # General Features
 parser.add_argument('--ENV_HPT_mode', type=str2bool, default=False, help='Enable/disable HPT mode')
@@ -63,7 +74,6 @@ parser.add_argument('--offline_simulation_size', type=int, default=0,
 parser.add_argument('--OFFLINE_SIM_DATA_PATH', type=str, default="data/LLM_games_personas.csv", help='LLM data path')
 parser.add_argument('--personas_balanced', type=str2bool, default=True, help='Personas balanced flag')
 parser.add_argument('--personas_group_number', type=int, default=-1, help='Personas group number')
-
 
 args = parser.parse_args()
 

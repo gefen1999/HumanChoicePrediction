@@ -250,6 +250,9 @@ class OnlineSimulationDataSet(Dataset):
                                                                                             quality_threshold)),
                             4: ("LLM stochastic (Language-based)",  basic_nature[3], user_strategies.LLM_based(is_stochastic=True)),
                             5: ("LLM deterministic", basic_nature[4], user_strategies.LLM_based(is_stochastic=False)),
+                            6: ("conservative_strategy", basic_nature[5], user_strategies.conservative_strategy),
+                            7: ("aggressive_pursuit", basic_nature[6], user_strategies.aggressive_pursuit),
+                            8: ("adaptive_learning", basic_nature[7], user_strategies.adaptive_learning),
                             }
             self.nature = np.random.rand(len(self.ACTIONS)) * np.array([v[1] for v in self.ACTIONS.values()])
             self.nature = self.nature / sum(self.nature)
@@ -275,7 +278,7 @@ class OnlineSimulationDataSet(Dataset):
                        "hotel_value": hotel.mean(),
                        "review_features": review_features,
                        "review_id": review_id}
-        user_action = user_strategy_function(information)
+        user_action = user_strategy_function(information, config=self.config)
         return user_action
 
     @staticmethod

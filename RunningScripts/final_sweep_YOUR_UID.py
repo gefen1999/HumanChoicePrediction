@@ -1,6 +1,6 @@
 import wandb
-YOUR_WANDB_USERNAME = "eilamshapira"
-project = "NLP2024_PROJECT_YOUR_UID"
+YOUR_WANDB_USERNAME = "gefen_and_tomer"
+project = "nlp_project"
 
 command = [
         "${ENVIRONMENT_VARIABLE}",
@@ -11,18 +11,51 @@ command = [
     ]
 
 sweep_config = {
-    "name": "LSTM: SimFactor=0/4 for any features representation",
+    "name": "oracle strategy set to 0 - e new incorporate strategies on test set - partial",
     "method": "grid",
-    "metric": {
-        "goal": "maximize",
-        "name": "AUC.test.max"
-    },
+    #"metric": {
+    #    "goal": "maximize",
+    #    "name": "AUC.test.max"
+    #},
     "parameters": {
-        "ENV_HPT_mode": {"values": [False]},
-        "architecture": {"values": ["LSTM"]},
         "seed": {"values": list(range(1, 6))},
-        "online_simulation_factor": {"values": [0, 4]},
-        "features": {"values": ["EFs", "GPT4", "BERT"]},
+
+        # aggressive pursuit hyperparameters on validation set
+        # "ENV_HPT_mode": {"values": [True]},
+        # "basic_nature": {"values": [19]},
+        # "aggressive_pursuit_fixed_interval": {"values": [1, 2, 3]},
+        # "aggressive_pursuit_divisor": {"values": [2, 3]},
+
+        # adaptive strategy hyperparameters on validation set
+        # "ENV_HPT_mode": {"values": [True]},
+        # "basic_nature": {"values": [20]},
+        # "adaptive_learning_disappointment_threshold": {"values": [0.2, 0.3, 0.4, 0.5, 0.6]},
+
+        # conservative strategy hyperparameters on validation set
+        # "ENV_HPT_mode": {"values": [True]},
+        # "basic_nature": {"values": [18]},
+        # "conservative_strategy_initial_threshold": {"values": [0.4, 0.5]},
+        # "conservative_strategy_alpha": {"values": [0.2, 0.4]},
+        # "conservative_strategy_min_threshold": {"values": [0.2, 0.3]},
+
+        # solo new strategies on test set
+        # "basic_nature": {"values": [17, 21, 22, 23]},
+        # "ENV_HPT_mode": {"values": [False]},
+
+        # incorporate new strategies (one each time) on test set
+        # "basic_nature": {"values": [17, 18, 19, 20]},
+        # "ENV_HPT_mode": {"values": [False]},
+
+        # # oracle strategy set to 0 - solo new strategies on test set
+        # "simulation_user_improve": {"values": [0]},
+        # "basic_nature": {"values": [17, 21, 22, 23]},
+        # "ENV_HPT_mode": {"values": [False]},
+
+        # oracle strategy set to 0 - incorporate new strategies (one each time) on test set
+        # "simulation_user_improve": {"values": [0]},
+        # "basic_nature": {"values": [18, 19, 20]},
+        # "ENV_HPT_mode": {"values": [False]},
+
     },
     "command": command
 }
